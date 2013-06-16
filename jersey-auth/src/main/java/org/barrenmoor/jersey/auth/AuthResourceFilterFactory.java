@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.barrenmoor.jersey.auth.roles.RoleProvider;
-import org.barrenmoor.jersey.auth.roles.RolesRequired;
+import org.barrenmoor.jersey.auth.roles.Authorize;
 
 import com.sun.jersey.api.model.AbstractMethod;
 import com.sun.jersey.spi.container.ResourceFilter;
@@ -17,11 +17,11 @@ public class AuthResourceFilterFactory implements ResourceFilterFactory {
 	public List<ResourceFilter> create(AbstractMethod method) {
 		List<ResourceFilter> list = new ArrayList<ResourceFilter>();
 
-		if(method.isAnnotationPresent(RolesRequired.class)) {
-			RolesRequired annotation = method.getAnnotation(RolesRequired.class);
+		if(method.isAnnotationPresent(Authorize.class)) {
+			Authorize annotation = method.getAnnotation(Authorize.class);
 			ResourceFilter resourceFilter = new AuthResourceFilter(
 													Arrays.asList(annotation.roles()), 
-													annotation.condition(), 
+													annotation.require(), 
 													roleProvider);
 			list.add(resourceFilter);
 		}

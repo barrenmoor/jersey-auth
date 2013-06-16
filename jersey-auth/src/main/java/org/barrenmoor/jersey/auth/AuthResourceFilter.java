@@ -25,11 +25,11 @@ public class AuthResourceFilter implements ResourceFilter, ContainerRequestFilte
 	
 	private List<String> requiredRoles;
 	private RoleProvider roleProvider;
-	private Roles condition;
+	private Roles require;
 	
-	public AuthResourceFilter(List<String> requiredRole, Roles condition, RoleProvider roleProvider) {
-		this.requiredRoles = requiredRole;
-		this.condition = condition;
+	public AuthResourceFilter(List<String> requiredRoles, Roles require, RoleProvider roleProvider) {
+		this.requiredRoles = requiredRoles;
+		this.require = require;
 		this.roleProvider = roleProvider;
 	}
 
@@ -58,25 +58,25 @@ public class AuthResourceFilter implements ResourceFilter, ContainerRequestFilte
 	 * 
 	 */
 	public ContainerRequest filter(ContainerRequest request) {
-		boolean hasRole = false;
-		if(Roles.ANY.equals(condition)) {
+		boolean authorized = false;
+		if(Roles.ANY.equals(require)) {
 			for(String role : roleProvider.roles()) {
 				if(requiredRoles.contains(role)) {
-					hasRole = true;
+					authorized = true;
 					break;
 				}
 			}
-		} else if(Roles.ALL.equals(condition)) {
+		} else if(Roles.ALL.equals(require)) {
 			for(String role : requiredRoles) {
-				hasRole = true;
+				authorized = true;
 				if(!roleProvider.roles().contains(role)) {
-					hasRole = false;
+					authorized = false;
 					break;
 				}
 			}
 		}
 
-		if(!hasRole) {
+		if(!authorized) {
 			throw new WebApplicationException(
 						Response.status(Status.UNAUTHORIZED)
 						.type(MediaType.APPLICATION_JSON_TYPE)

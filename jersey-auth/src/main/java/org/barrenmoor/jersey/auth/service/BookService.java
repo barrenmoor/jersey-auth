@@ -6,14 +6,14 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import org.barrenmoor.jersey.auth.roles.Roles;
-import org.barrenmoor.jersey.auth.roles.RolesRequired;
+import org.barrenmoor.jersey.auth.roles.Authorize;
 
 @Path("/books")
 public class BookService {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@RolesRequired(roles = {"STORE_KEEPER"}, condition = Roles.ANY)
+	@Authorize(roles = {"STORE_KEEPER_1"}, require = Roles.ANY)
 	public Book getBook() {
 		return new Book("isbn1", "A Farewell to Arms", "Ernest Hemingway");
 	}
