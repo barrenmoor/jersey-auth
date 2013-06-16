@@ -13,8 +13,15 @@ public class BookService {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@Authorize(roles = {"STORE_KEEPER_1"}, require = Roles.ANY)
+	@Authorize(roles = {"STORE_KEEPER", "ACCOUNTANT"}, require = Roles.ANY)
 	public Book getBook() {
 		return new Book("isbn1", "A Farewell to Arms", "Ernest Hemingway");
+	}
+	
+	@GET
+	@Path("/secret")
+	@Authorize(roles = {"ADMINISTRATOR", "ADVISOR"}, require = Roles.ALL)
+	public Book getSecretBook() {
+		return new Book("isbn2", "Crime and Punishment", "Fyodor Dostoevsky");
 	}
 }

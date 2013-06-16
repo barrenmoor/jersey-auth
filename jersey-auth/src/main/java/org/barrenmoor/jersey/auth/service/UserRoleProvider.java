@@ -1,7 +1,12 @@
 package org.barrenmoor.jersey.auth.service;
 
-import java.util.Arrays;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import org.barrenmoor.jersey.auth.roles.RoleProvider;
 
@@ -13,6 +18,38 @@ import org.barrenmoor.jersey.auth.roles.RoleProvider;
 public class UserRoleProvider implements RoleProvider {
 
 	public List<String> roles() {
-		return Arrays.asList("STORE_KEEPER");
+		List<String> roles = new ArrayList<String>();
+		
+		try {
+			File f = new File("roles.txt");
+			System.out.println("path to roles.txt: " + f.getAbsolutePath());
+
+			String rolesStr = getRolesString(f);
+			StringTokenizer tokenizer = new StringTokenizer(rolesStr, "|");
+			
+			while(tokenizer.hasMoreTokens()) {
+				roles.add(tokenizer.nextToken().trim());
+			}
+			
+			roles.remove("");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return roles;
+	}
+
+	private String getRolesString(File f) throws FileNotFoundException, IOException {
+		FileInputStream fis = new FileInputStream(f);
+		StringBuffer buff = new StringBuffer();
+		int c = -1;
+		
+		while((c = fis.read()) != -1) {
+			buff.append((char)c);
+		}
+		
+		fis.close();
+		return buff.toString();
 	}
 }

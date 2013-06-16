@@ -2,9 +2,6 @@ package org.barrenmoor.jersey.auth;
 
 import java.util.List;
 
-import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import org.barrenmoor.jersey.auth.roles.RoleProvider;
@@ -77,10 +74,8 @@ public class AuthResourceFilter implements ResourceFilter, ContainerRequestFilte
 		}
 
 		if(!authorized) {
-			throw new WebApplicationException(
-						Response.status(Status.UNAUTHORIZED)
-						.type(MediaType.APPLICATION_JSON_TYPE)
-						.build());
+			throw new AuthorizationException(Status.UNAUTHORIZED,
+							"Unauthorized Access! You do not have sufficient roles to access this service!");
 		}
 
 		return request;
