@@ -10,7 +10,7 @@
 		<servlet-class>org.barrenmoor.jersey.auth.CustomJerseyServlet</servlet-class>
 		<init-param>
 			<param-name>com.sun.jersey.config.property.packages</param-name>
-			<param-value>org.barrenmoor.jersey.auth</param-value>
+			<param-value>org.barrenmoor.jersey.auth;org.barrenmoor.jersey.schematest.service;org.codehaus.jackson.jaxrs</param-value>
 		</init-param>
 		<init-param>
 			<param-name>com.sun.jersey.spi.container.ResourceFilters</param-name>
