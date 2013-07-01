@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.PropertyResourceBundle;
+import java.util.ResourceBundle;
 import java.util.StringTokenizer;
 
 import org.barrenmoor.jersey.auth.roles.RoleProvider;
@@ -21,7 +23,10 @@ public class UserRoleProvider implements RoleProvider {
 		List<String> roles = new ArrayList<String>();
 		
 		try {
-			File f = new File("roles.txt");
+			ResourceBundle bundle = PropertyResourceBundle.getBundle("org.barrenmoor.jersey.auth.service.rolefilepath");
+			String filePath = (String)bundle.getObject("file.path");
+
+			File f = new File(filePath, "roles.txt");
 			System.out.println("path to roles.txt: " + f.getAbsolutePath());
 
 			String rolesStr = getRolesString(f);
