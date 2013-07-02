@@ -16,7 +16,7 @@ public class DataSourceRESTProvider {
 	@GET
 	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	public Response get(@QueryParam("flag") String flag) {
+	public Response get(@QueryParam("flag") String flag, @QueryParam("nil") String nil) {
 		
 		ConnectionParams cp = null;
 		
@@ -39,7 +39,11 @@ public class DataSourceRESTProvider {
 		DataSource ds = new DataSource();
 		
 		ds.setId("id123");
-		ds.setName("some name");
+		if("t".equals(nil)) {
+			// do nothing
+		} else {
+			ds.setName("some name");
+		}
 		ds.setConnectionParams(cp);
 		
 		return Response.status(Status.OK).entity(ds).build();

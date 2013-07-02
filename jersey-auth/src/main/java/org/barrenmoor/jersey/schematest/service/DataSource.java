@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class DataSource {
 	@XmlElement
 	private String id;
-	@XmlElement
+	@XmlElement(nillable=false)
 	private String name;
 	@XmlElement
 	private ConnectionParams connectionParams;
