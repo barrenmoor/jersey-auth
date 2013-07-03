@@ -15,8 +15,8 @@ public class DBConnectionParams extends ConnectionParams {
 	private String host;
 	@XmlElement
 	private String databaseName;
-	@XmlElement
-	private String port;
+	@XmlElement(nillable=false, defaultValue="-3000000")
+	private Integer port;
 
 	public String getHost() {
 		return host;
@@ -30,10 +30,10 @@ public class DBConnectionParams extends ConnectionParams {
 	public void setDatabaseName(String databaseName) {
 		this.databaseName = databaseName;
 	}
-	public String getPort() {
+	public Integer getPort() {
 		return port;
 	}
-	public void setPort(String port) {
+	public void setPort(Integer port) {
 		this.port = port;
 	}
 }

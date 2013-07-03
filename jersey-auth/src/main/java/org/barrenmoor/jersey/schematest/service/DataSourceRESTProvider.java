@@ -25,7 +25,7 @@ public class DataSourceRESTProvider {
 			dbcp.setDatabaseName("cuic_data");
 			dbcp.setHost("10.78.90.103");
 			dbcp.setPassword("89547384573");
-			dbcp.setPort("1500");
+			dbcp.setPort(1500);
 			dbcp.setUserId("cuic_dbuser");
 			cp = dbcp;
 		} else {
@@ -54,6 +54,9 @@ public class DataSourceRESTProvider {
 	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	public Response post(DataSource ds) {
 		System.out.println(ds.getConnectionParams().getClass().getName());
+		
+		System.out.println(((DBConnectionParams)ds.getConnectionParams()).getPort());
+		
 		return Response.status(Status.CREATED).build();
 	}
 }
